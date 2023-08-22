@@ -1,34 +1,62 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import React from 'react'
 import './App.css'
+import { useTranslate } from './hooks/useTranslate'
+import { type FromLanguage, type Language } from './types'
 
-function App() {
-  const [count, setCount] = useState(0)
+function App () {
+  const { fromLanguage, toLanguage, interchanceLenguage, setFromLenguage, setToLenguage, fromText, result } = useTranslate()
+
+  const handleClick = () => {
+    interchanceLenguage()
+  }
+  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    if (event.target.name === 'from') {
+      const value = event.target.value
+      setFromLenguage((value as FromLanguage))
+    }
+
+    if (event.target.name === 'to') {
+      const value = event.target.value
+      setToLenguage((value as Language))
+    }
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div>
+
+      <header>
+        <div>
+          <select name="from" id="" value={fromLanguage} onChange={handleChange}>
+            <option value="auto">Auto</option>
+            <option value="en">Englisg</option>
+            <option value="es">Spanish</option>
+            <option value="fr">Frances</option>
+          </select>
+
+          <button onClick={handleClick}>Intercambiar</button>
+
+          <select name="to" id="" value={toLanguage} onChange={handleChange}>
+            <option value="en">Englisg</option>
+            <option value="es">Spanish</option>
+            <option value="fr">Frances</option>
+          </select>
+        </div>
+      </header>
+
+      <main>
+        <div>
+
+          <textarea name="" id="" cols="30" rows="10" value={fromText} >
+
+          </textarea>
+          <textarea name="" id="" cols="30" rows="10" disabled value={result}>
+
+          </textarea>
+        </div>
+
+      </main>
+
+    </div>
   )
 }
 
